@@ -64,14 +64,12 @@ class _NotificationState extends State<Notification>
       },
     );
 
-    _controller.addListener(
-      () {
-        if (_controller.status == AnimationStatus.completed ||
-            _controller.status == AnimationStatus.dismissed) {
-          widget.removeNotification();
-        }
-      },
-    );
+    _controller.addListener(() {
+      if (_controller.status == AnimationStatus.completed ||
+          _controller.status == AnimationStatus.dismissed) {
+        widget.removeNotification();
+      }
+    });
   }
 
   @override
@@ -103,7 +101,7 @@ class _NotificationState extends State<Notification>
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.5),
+                    color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(0, 3), // changes position of shadow
@@ -116,9 +114,9 @@ class _NotificationState extends State<Notification>
                   Text(
                     widget.statusCode.toString(),
                     textAlign: TextAlign.center,
-                    style: context.textTheme.bodyLarge!
-                        .toBold()
-                        .withColor(Colors.black),
+                    style: context.textTheme.bodyLarge!.toBold().withColor(
+                      Colors.black,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -135,8 +133,9 @@ class _NotificationState extends State<Notification>
                         const SizedBox(height: 4),
                         Text(
                           widget.path,
-                          style: context.textTheme.bodySmall
-                              ?.withColor(Colors.black),
+                          style: context.textTheme.bodySmall?.withColor(
+                            Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -166,10 +165,11 @@ class _NotificationState extends State<Notification>
     );
     await ChuckerFlutter.navigatorObserver.navigator?.push(
       MaterialPageRoute<dynamic>(
-        builder: (_) => Theme(
-          data: ThemeData.light(useMaterial3: false),
-          child: ApiDetailsPage(api: api),
-        ),
+        builder:
+            (_) => Theme(
+              data: ThemeData.light(useMaterial3: false),
+              child: ApiDetailsPage(api: api),
+            ),
       ),
     );
   }

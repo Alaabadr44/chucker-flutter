@@ -36,27 +36,21 @@ class ChuckerUiHelper {
     notificationShown = false;
 
     if (!ChuckerUiHelper.settings.showNotification) {
-      debugPrint(
-        '''
+      debugPrint('''
 ChuckerFlutter: Your notification setting is off. You can turn it on by visiting the settings page from Chucker Flutter screen.
-        ''',
-      );
+        ''');
       return false;
     }
     if (ChuckerFlutter.navigatorObserver.navigator == null) {
-      debugPrint(
-        '''
+      debugPrint('''
 ChuckerFlutter: You didn't add ChuckerFlutter.navigatorObserver in your material app. Visit https://github.com/syedmurtaza108/chucker-flutter#getting-started for Chucker Integration details.
-        ''',
-      );
+        ''');
       return false;
     }
     if (!ChuckerFlutter.showNotification) {
-      debugPrint(
-        '''
+      debugPrint('''
 ChuckerFlutter: You programmatically vetoed notification behavior. Make sure to remove `ChuckerFlutter.showNotification = true` to continue receiving notifications.
-        ''',
-      );
+        ''');
       return false;
     }
 
@@ -105,24 +99,25 @@ ChuckerFlutter: You programmatically vetoed notification behavior. Make sure to 
     SharedPreferencesManager.getInstance().getSettings();
     ChuckerFlutter.navigatorObserver.navigator!.push(
       MaterialPageRoute<void>(
-        builder: (context) => MaterialApp(
-          key: const Key('chucker_material_app'),
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: Localization.localizationsDelegates,
-          supportedLocales: Localization.supportedLocales,
-          locale: Localization.currentLocale,
-          theme: ThemeData(
-            useMaterial3: false,
-            tabBarTheme: TabBarThemeData(
-              labelColor: Colors.white,
-              labelStyle: context.textTheme.bodyLarge,
-            ),
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  surface: primaryColor,
+        builder:
+            (context) => MaterialApp(
+              key: const Key('chucker_material_app'),
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: Localization.localizationsDelegates,
+              supportedLocales: Localization.supportedLocales,
+              locale: Localization.currentLocale,
+              theme: ThemeData(
+                useMaterial3: false,
+                tabBarTheme: TabBarTheme(
+                  labelColor: Colors.white,
+                  labelStyle: context.textTheme.bodyLarge,
                 ),
-          ),
-          home: const ChuckerPage(),
-        ),
+                colorScheme: Theme.of(
+                  context,
+                ).colorScheme.copyWith(surface: primaryColor),
+              ),
+              home: const ChuckerPage(),
+            ),
       ),
     );
   }
@@ -149,9 +144,10 @@ class ChuckerFlutter {
   static bool showNotification = true;
 
   ///[ChuckerButton] can be placed anywhere in the UI to open Chucker Screen
-  static final chuckerButton = isDebugMode || ChuckerFlutter.showOnRelease
-      ? ChuckerButton.getInstance()
-      : const SizedBox.shrink();
+  static final chuckerButton =
+      isDebugMode || ChuckerFlutter.showOnRelease
+          ? ChuckerButton.getInstance()
+          : const SizedBox.shrink();
 
   ///[showChuckerScreen] navigates to the chucker home screen
   static void showChuckerScreen() => ChuckerUiHelper.showChuckerScreen();
